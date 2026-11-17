@@ -1,0 +1,11 @@
+#!name=AI Services Availability & Node Monitor
+#!desc=实时检测 ChatGPT、Gemini、Claude 的连通可用性、响应延迟，以及当前实际分流的生效代理节点与落地机房。支持点击立即重新检测。
+#!category=AI & Automation
+#!arguments=CHATGPT_POLICY:AI Suite,GEMINI_POLICY:Gemini,CLAUDE_POLICY:Claude,TIMEOUT:5000,SHOW_COLO:true,SCRIPT_PATH:https://raw.githubusercontent.com/flylocus/surge-ai-panel/main/ai-panel.js
+#!arguments-desc=CHATGPT_POLICY: ChatGPT 对应的策略组名称（如 "AI Suite"、"OpenAI" 等，留空则自动匹配或走默认规则）\nGEMINI_POLICY: Gemini 对应的策略组名称（如 "Gemini"、"Google" 等，留空则自动匹配）\nCLAUDE_POLICY: Claude 对应的策略组名称（如 "Claude"、"Claude-Relay" 等，留空则自动匹配）\nTIMEOUT: 单项检测超时毫秒数 (默认 5000)\nSHOW_COLO: 是否展示 Cloudflare 出口落地机房代号 (如 US·SJC, 默认 true)\nSCRIPT_PATH: 脚本路径 (默认指向 GitHub Raw，也可改为本地文件名 ai-panel.js)
+
+[Panel]
+AI-Services = script-name=AI-Services-Panel, title="🤖 AI 服务与节点检测", content="正在初始化并检测 ChatGPT, Gemini, Claude 可访问性...", style=info, update-interval=300
+
+[Script]
+AI-Services-Panel = type=generic, timeout=15, script-path={{{SCRIPT_PATH}}}, argument=chatgpt_policy={{{CHATGPT_POLICY}}}&gemini_policy={{{GEMINI_POLICY}}}&claude_policy={{{CLAUDE_POLICY}}}&timeout={{{TIMEOUT}}}&show_colo={{{SHOW_COLO}}}
